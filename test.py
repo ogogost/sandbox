@@ -1,6 +1,5 @@
 
 while True:
-
     user_input = input('command:').split()
     user_com = user_input[0]
     user_arg1 = user_input[1]
