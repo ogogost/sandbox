@@ -83,9 +83,6 @@ while True:
     user_input = input('Your choice (bid ... ').split()
     user_command = user_input[0]
     user_bid = int(user_input[1])
-    # if user_input[0] == 'bid' and user_input[1] == '':
-    #     user_bid = bid
-    #     money_print()
 
     if user_command == 'bid' and user_bid != 0:
         money_gamer = money_gamer - user_bid
@@ -94,4 +91,5 @@ while True:
         gamer_hand.append(cards.pop())
         print(cards_count(gamer_hand))
         cards_status()
+
     # elif user_command == 'pas':
