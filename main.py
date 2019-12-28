@@ -53,13 +53,16 @@ money_gamer = money_gamer - bid
 bank = bid * 2
 
 # print(cards)
+
 # создаю функцию для распечатки баланса денег
 def money_print():
     print('BANK =', bank, 'Dealer balance=', money_dealer, 'Your balance=', money_gamer)
+
 # создаю функицю отображения карт на руках игроков
 def cards_status():
     print('Dealer`s cards:', dealer_hand)
     print('Your cards:', gamer_hand)
+
 # функция для подсчета очков на руках игрока/дилера
 def cards_count(hand):
     counter = 0
@@ -70,15 +73,9 @@ def cards_count(hand):
     for i in range(len(hand)): # заменяем картинки(кроме туза) на 10
         if sum_hand[i] == 'J' or sum_handhand[i] == 'Q' or sum_handhand[i] == 'K':
             sum_hand[i] = 10
-
     print('sum_hand=', sum_hand)
     counter = sum(sum_hand)
-
     return counter
-
-    print(hand)
-
-    print(counter)
 
 cards_status()
 
