@@ -59,16 +59,24 @@ def cards_status():
 
 def cards_count(hand):
     counter = 0
-
+    sum_hand = []
+    print(hand)
     for i in range(len(hand)):
-        if hand[i][1] == 'J':
-            hand[i][1] = 10
-        elif hand[i][1] == 'Q':
-            hand[i][1] = 10
-        elif hand[i][1] == 'K':
-            hand[i][1] = 10
-        elif hand[i][1] == 'A':
+        sum_hand[i] = hand[i][0:1]
+    for i in range(len(hand)):
+        if sum_hand[i] == 'J' or sum_handhand[i] == 'Q' or sum_handhand[i] == 'K':
+            sum_hand[i] = 10
 
+    print('sum_hand=', sum_hand)
+    counter = sum(sum_hand)
+    # for i in range(len(hand)):
+    #     if sum_hand[i] == 'J':
+    #         sum_hand[i] = 10
+    #     elif sum_hand[i] == 'Q':
+    #         sum_hand[i] = 10
+    #     elif sum_hand[i] == 'K':
+    #         sum_hand[i] = 10
+    return counter
     print(hand)
 
     print(counter)
@@ -88,6 +96,6 @@ while True:
         bank = bank + user_bid
         money_print()
         gamer_hand.append(cards.pop())
-        cards_count(gamer_hand)
+        print(cards_count(gamer_hand))
         cards_status()
     # elif user_command == 'pas':
