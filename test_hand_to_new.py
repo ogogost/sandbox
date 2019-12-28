@@ -1,6 +1,5 @@
-import random
-
-
+import random # пригодится для тасования колоды
+# создаем колоду для игры
 street = []
 for i in range(2, 11):
       street.append(i)
