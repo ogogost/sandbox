@@ -54,30 +54,38 @@ bank = bid * 2
 
 # print(cards)
 
-# создаю функцию для распечатки баланса денег
-def money_print():
+def status():
     print('BANK =', bank, 'Dealer balance=', money_dealer, 'Your balance=', money_gamer)
-
-# создаю функицю отображения карт на руках игроков
-def cards_status():
     print('Dealer`s cards:', dealer_hand)
     print('Your cards:', gamer_hand)
+
+# создаю функцию для распечатки баланса денег
+# def money_print():
+#     print('BANK =', bank, 'Dealer balance=', money_dealer, 'Your balance=', money_gamer)
+#
+# создаю функицю отображения карт на руках игроков
+# def cards_status():
+#     print('Dealer`s cards:', dealer_hand)
+#     print('Your cards:', gamer_hand)
 
 # функция для подсчета очков на руках игрока/дилера
 def cards_count(hand):
     counter = 0
-    sum_hand = [] # временный список для подсчета очков, т.к. впрямую сумму не посчитать
+    hand2 = [] # временный список для подсчета очков, т.к. впрямую сумму не посчитать
     print(hand)
     for i in range(len(hand)): # убираем символ масти, для подсчета не нужен
-        sum_hand[i] = hand[i][0:1]
+        hand2[i] = hand[1:2][i]
     for i in range(len(hand)): # заменяем картинки(кроме туза) на 10
-        if sum_hand[i] == 'J' or sum_handhand[i] == 'Q' or sum_handhand[i] == 'K':
-            sum_hand[i] = 10
-    print('sum_hand=', sum_hand)
-    counter = sum(sum_hand)
+        if hand[i] == 'J' or hand[i] == 'Q' or hand[i] == 'K':
+            hand2[i] = 10
+    print('hand2=', hand2)
+    for i in range(len(hand2)):
+        hand2[i] = int(hand2[i])
+    counter = sum(hand2)
+    hand2.clear()
     return counter
 
-cards_status()
+status()
 
 while True:
     user_input = input('Your choice (bid ... ').split()
@@ -87,9 +95,8 @@ while True:
     if user_command == 'bid' and user_bid != 0:
         money_gamer = money_gamer - user_bid
         bank = bank + user_bid
-        money_print()
         gamer_hand.append(cards.pop())
         print(cards_count(gamer_hand))
-        cards_status()
+        status()
 
     # elif user_command == 'pas':
