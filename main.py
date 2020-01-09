@@ -1,11 +1,10 @@
 import random
 
-print('Добро пожаловать в игру БЛЭК ДЖЭК!')
-print(' Правила игры: Масти карты: ♥ - червы ♦ - бубны ♣ - трефы ♠ - пики ')
-print('Названия карт и их стоимость при подсчете: ')
-print('2 - 2, 3 - 3, 4 - 4, 5 - 5, 6 - 6, 7 - 7, 8 - 8,'
-      ,'\n','9 - 9, 10 - 10, J - 2, Q - 3, K - 4, A - 1 или 11')
-
+# print('Добро пожаловать в игру БЛЭК ДЖЭК!')
+# print(' Правила игры: Масти карты: ♥ - червы ♦ - бубны ♣ - трефы ♠ - пики ')
+# print('Названия карт и их стоимость при подсчете: ')
+# print('2 - 2, 3 - 3, 4 - 4, 5 - 5, 6 - 6, 7 - 7, 8 - 8,'
+#       ,'\n','9 - 9, 10 - 10, J - 2, Q - 3, K - 4, A - 1 или 11')
 
 # создаем колоду для игры
 # создаем список номиналов карт в масти
@@ -32,7 +31,7 @@ for i in range(len(suits)):
         cards.append(str(suits[i]) + str(street[j]))
 # print(cards)
 random.shuffle(cards)
-print(cards)
+# print(cards)
 
 # создаем стартовые условия для игры
 
@@ -71,32 +70,35 @@ def status():
 # функция для подсчета очков на руках игрока/дилера
 def cards_count(hand):
     counter = 0
-    hand2 = [] # временный список для подсчета очков, т.к. впрямую сумму не посчитать
-    print(hand)
-    for i in range(len(hand)): # убираем символ масти, для подсчета не нужен
-        hand2[i] = hand[1:2][i]
+    hand2 = hand.copy() # временный список для подсчета очков, т.к. впрямую сумму не посчитать
+    print(hand2)
+    for i in range(len(hand2)): # убираем символ масти, для подсчета не нужен
+        hand2[i] = hand2[i][1:3]
     for i in range(len(hand)): # заменяем картинки(кроме туза) на 10
-        if hand[i] == 'J' or hand[i] == 'Q' or hand[i] == 'K':
+        if hand2[i] == 'J' or hand2[i] == 'Q' or hand2[i] == 'K':
             hand2[i] = 10
-    print('hand2=', hand2)
     for i in range(len(hand2)):
         hand2[i] = int(hand2[i])
     counter = sum(hand2)
-    hand2.clear()
     return counter
 
 status()
 
 while True:
-    user_input = input('Your choice (bid ... ').split()
-    user_command = user_input[0]
-    user_bid = int(user_input[1])
+    user_input = input('Type your choice, for example bid, or stop: ')
 
-    if user_command == 'bid' and user_bid != 0:
+    if user_input == 'bid':
+        user_bid = int(input('Input your bid:'))
         money_gamer = money_gamer - user_bid
         bank = bank + user_bid
         gamer_hand.append(cards.pop())
         print(cards_count(gamer_hand))
         status()
+        if int(cards_count(gamer_hand)) > 21:
+            print('You loose this round')
 
-    # elif user_command == 'pas':
+    elif user_input == 'stop':
+        dealer_hand.append(cards.pop())
+        print(cards_count(dealer_hand))
+        pass
+
