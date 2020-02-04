@@ -35,7 +35,7 @@ random.shuffle(cards)
 
 # создаем стартовые условия для игры
 
-print('Game start. Round 1')
+round = 1
 dealer_hand = []
 gamer_hand = []
 money_dealer = 1000
@@ -70,21 +70,32 @@ def status():
 # функция для подсчета очков на руках игрока/дилера
 def cards_count(hand):
     counter = 0
+    counter_temp = 0
+    aces = 0
+    ace_place = 0
     hand2 = hand.copy() # временный список для подсчета очков, т.к. впрямую сумму не посчитать
-    print(hand2)
-    for i in range(len(hand2)): # убираем символ масти, для подсчета не нужен
-        hand2[i] = hand2[i][1:3]
-    for i in range(len(hand)): # заменяем картинки(кроме туза) на 10
+    for i in range(len(hand2)):
+        hand2[i] = hand2[i][1:3] # убираем символ масти, для подсчета не нужен
         if hand2[i] == 'J' or hand2[i] == 'Q' or hand2[i] == 'K':
-            hand2[i] = 10
+            hand2[i] = 10 # заменяем картинки(кроме туза) на 10
+    aces = hand2.count('A')
+    if aces == 1:
+        ace_place = hand2.remove('A')
     for i in range(len(hand2)):
         hand2[i] = int(hand2[i])
+    counter_temp = sum(hand2)
+    if counter_temp > 11:
+        hand2.append(1)
     counter = sum(hand2)
     return counter
 
 status()
 
 while True:
+
+    print ('Round No:', round)
+    round += 1
+
     user_input = input('Type your choice, for example bid, or stop: ')
 
     if user_input == 'bid':
@@ -92,13 +103,15 @@ while True:
         money_gamer = money_gamer - user_bid
         bank = bank + user_bid
         gamer_hand.append(cards.pop())
-        print(cards_count(gamer_hand))
         status()
+        print(cards_count(gamer_hand))
         if int(cards_count(gamer_hand)) > 21:
             print('You loose this round')
+
 
     elif user_input == 'stop':
         dealer_hand.append(cards.pop())
         print(cards_count(dealer_hand))
         pass
-
+    elif user_input == 'exit' or 'quit':
+        break
