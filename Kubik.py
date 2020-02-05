@@ -5,6 +5,7 @@ win = 0
 print("Welcome to our best casino in the world!")
 print("You must try to guess kubik number, it is random factor")
 
+
 while win == 0:
 
     player1_input = int(input("Player1 input number:"))

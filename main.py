@@ -78,10 +78,7 @@ def status():
 """
 
 def cards_count(hand):
-    counter = 0
-    counter_temp = 0
-    aces = 0
-    aces_factor = 0
+
     hand2 = hand.copy() # временный список для подсчета очков, т.к. впрямую сумму не посчитать
     for i in range(len(hand2)):
         hand2[i] = hand2[i][1:3] # убираем символ масти, для подсчета не нужен
@@ -112,10 +109,12 @@ def cards_count(hand):
 Dealers turn
 """
 
-def turn_dealer():
+def dealer():
+
     dealer_hand.append(cards.pop())
-    if cards_count(dealer_hand) < cards_count(gamer_hand) and cards_count(dealer_hand) < 20:
-        turn_dealer()
+
+    if (cards_count(dealer_hand) < cards_count(gamer_hand)) and (cards_count(dealer_hand) < 20):
+        dealer()
 
     else:
         turn_dealer = 0
@@ -123,7 +122,7 @@ def turn_dealer():
 ОСНОВНОЙ ЦИКЛ ИГРЫ
 """
 
-game_over = 0
+game_over = 0 # по этой переменной будем вырубать цикл
 while game_over != 1:
 
     money_dealer = money_dealer - bid
@@ -152,15 +151,16 @@ while game_over != 1:
 
         continue
 
-    elif user_input == 'exit' or 'quit':
-        break
+    # elif user_input == 'exit' or 'quit':
+    #     break
 
     elif user_input == 'stop': # игрок прекращает набор карт и передает ход дилеру
 
         turn_dealer = 1
         while turn_dealer == 1: # запускаем цикл набора карт дилером, играет компьютерная логика
+            # print("error")
 
-            turn_dealer()
+            dealer()
 
         if cards_count(dealer_hand) > 21: # дилер проигрывает
             print('Dealer loose')
