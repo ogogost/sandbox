@@ -59,8 +59,8 @@ bank = bid_dealer + bid_gamer
 """
 def status():
     print('BANK =', bank, 'Dealer balance=', money_dealer, 'Your balance=', money_gamer)
-    print('Dealer`s cards:', dealer_hand)
-    print('Your cards:', gamer_hand)
+    print('Your cards:', gamer_hand, 'Dealer`s cards:', dealer_hand)
+    print('Your points:', cards_count(gamer_hand), 'Dealers points:', cards_count(dealer_hand))
 
 # создаю функцию для распечатки баланса денег
 # def money_print():
@@ -108,13 +108,23 @@ def cards_count(hand):
 
     return counter
 
+"""
+Dealers turn
+"""
 
+def turn_dealer():
+    dealer_hand.append(cards.pop())
+    if cards_count(dealer_hand) < cards_count(gamer_hand) and cards_count(dealer_hand) < 20:
+        turn_dealer()
+
+    else:
+        turn_dealer = 0
 """
 ОСНОВНОЙ ЦИКЛ ИГРЫ
 """
 
-
-while True:
+game_over = 0
+while game_over != 1:
 
     money_dealer = money_dealer - bid
     money_gamer = money_gamer - bid
@@ -125,47 +135,39 @@ while True:
     status()
 
     user_input = input('Type your choice, for example bid, more or stop: ')
+
     if user_input == 'bid':
-        user_bid = int(input('Input your bid:'))
-        money_gamer = money_gamer - user_bid
-        bank = bank + user_bid
+        bid_gamer = int(input('Input your bid:'))
+        money_gamer = money_gamer - bid_gamer
+        bank = bank + bid_gamer
         gamer_hand.append(cards.pop())
-        print('Your points:', cards_count(gamer_hand))
         if int(cards_count(gamer_hand)) > 21:
             print('You loose this round')
 
     elif user_input == 'more':
         gamer_hand.append(cards.pop())
-        print('Your points:', cards_count(gamer_hand))
-
         if int(cards_count(gamer_hand)) > 21:
             print('You loose this round')
 
 
         continue
 
-
-
     elif user_input == 'exit' or 'quit':
         break
 
     elif user_input == 'stop': # игрок прекращает набор карт и передает ход дилеру
 
-        flag = 1
+        turn_dealer = 1
+        while turn_dealer == 1: # запускаем цикл набора карт дилером, играет компьютерная логика
 
-        while flag == 1: # запускаем цикл набора карт дилером, играет компьютерная логика
-
-            dealer_hand.append(cards.pop())
-
-            print('Dealers points:', cards_count(dealer_hand))
-
-            if cards_count(dealer_hand) < cards_count(gamer_hand) and cards_count(dealer_hand) < 20:
-                continue
-            else:
-                flag = 0
+            turn_dealer()
 
         if cards_count(dealer_hand) > 21: # дилер проигрывает
-                print('Dealer loose')
+            print('Dealer loose')
+
+        elif cards_count(dealer_hand) > cards_count(gamer_hand) and cards_count(dealer_hand) <= 21:
+            print('Dealer win!')
+
 
 
 
